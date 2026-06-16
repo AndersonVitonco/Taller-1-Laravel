@@ -2,79 +2,137 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Operacion;
+use Illuminate\Http\Request;
+
 class OperacionesController extends Controller
 {
-    public function cuadratica($a, $b, $c)
+    public function index()
     {
-        $discriminante = ($b * $b) - (4 * $a * $c);
+        return view('operaciones');
+    }
 
-        if ($discriminante < 0) {
-            return "no tiene soluciones reales";
+    public function sumar(Request $request)
+    {
+        $numero1 = (float) $request->input('numero1');
+        $numero2 = (float) $request->input('numero2');
+        $resultado = $numero1 + $numero2;
+
+        $this->guardar('suma', 'numero1=' . $numero1 . ', numero2=' . $numero2, (string) $resultado);
+
+        return redirect()->route('operaciones.index')->with('resultado', 'La suma es: ' . $resultado);
+    }
+
+    public function restar(Request $request)
+    {
+        $numero1 = (float) $request->input('numero1');
+        $numero2 = (float) $request->input('numero2');
+        $resultado = $numero1 - $numero2;
+
+        $this->guardar('resta', 'numero1=' . $numero1 . ', numero2=' . $numero2, (string) $resultado);
+
+        return redirect()->route('operaciones.index')->with('resultado', 'La resta es: ' . $resultado);
+    }
+
+    public function triangulo(Request $request)
+    {
+        $base = (float) $request->input('base');
+        $altura = (float) $request->input('altura');
+        $resultado = ($base * $altura) / 2;
+
+        $this->guardar('area_triangulo', 'base=' . $base . ', altura=' . $altura, (string) $resultado);
+
+        return redirect()->route('operaciones.index')->with('resultado', 'El area del triangulo es: ' . $resultado);
+    }
+
+    public function circulo(Request $request)
+    {
+        $radio = (float) $request->input('radio');
+        $resultado = pi() * ($radio * $radio);
+
+        $this->guardar('area_circulo', 'radio=' . $radio, (string) $resultado);
+
+        return redirect()->route('operaciones.index')->with('resultado', 'El area del circulo es: ' . $resultado);
+    }
+
+    public function factorial(Request $request)
+    {
+        $numero = (int) $request->input('numero');
+        $factorial = 1;
+
+        for ($i = 1; $i <= $numero; $i++) {
+            $factorial = $factorial * $i;
         }
 
-        $x1 = (-$b + sqrt($discriminante)) / (2 * $a);
-        $x2 = (-$b - sqrt($discriminante)) / (2 * $a);
+        $this->guardar('factorial', 'numero=' . $numero, (string) $factorial);
 
-        return "x1 = $x1, x2 = $x2";
+        return redirect()->route('operaciones.index')->with('resultado', 'El factorial es: ' . $factorial);
     }
 
-    public function triangulo($base, $altura)
+    public function primo(Request $request)
     {
-        return "area del triangulo = " . ($base * $altura) / 2;
-    }
+        $numero = (int) $request->input('numero');
+        $esPrimo = true;
 
-    public function circulo($radio)
-    {
-        return "area del circulo = " . pi() * ($radio * $radio);
-    }
-
-    public function factorial($num)
-    {
-        $fact = 1;
-
-        for ($i = 1; $i <= $num; $i++) {
-            $fact *= $i;
+        if ($numero < 2) {
+            $esPrimo = false;
         }
 
-        return "factorial de $num = $fact";
-    }
-
-    public function primo($num)
-    {
-        if ($num < 2) {
-            return "$num no es primo";
-        }
-
-        for ($i = 2; $i <= sqrt($num); $i++) {
-            if ($num % $i == 0) {
-                return "$num no es primo";
+        for ($i = 2; $i <= sqrt($numero); $i++) {
+            if ($numero % $i == 0) {
+                $esPrimo = false;
+                break;
             }
         }
 
-        return "$num es primo";
+        if ($esPrimo) {
+            $resultado = 'El numero ' . $numero . ' es primo';
+        } else {
+            $resultado = 'El numero ' . $numero . ' no es primo';
+        }
+
+        $this->guardar('numero_primo', 'numero=' . $numero, $resultado);
+
+        return redirect()->route('operaciones.index')->with('resultado', $resultado);
     }
 
-    public function amigos($num1, $num2)
+    public function amigos(Request $request)
     {
+        $numero1 = (int) $request->input('numero1');
+        $numero2 = (int) $request->input('numero2');
+
         $suma1 = 0;
         $suma2 = 0;
 
-        for ($i = 1; $i < $num1; $i++) {
-            if ($num1 % $i == 0) {
-                $suma1 += $i;
+        for ($i = 1; $i < $numero1; $i++) {
+            if ($numero1 % $i == 0) {
+                $suma1 = $suma1 + $i;
             }
         }
 
-        for ($j = 1; $j < $num2; $j++) {
-            if ($num2 % $j == 0) {
-                $suma2 += $j;
+        for ($j = 1; $j < $numero2; $j++) {
+            if ($numero2 % $j == 0) {
+                $suma2 = $suma2 + $j;
             }
         }
 
-        if ($suma1 == $num2 && $suma2 == $num1) {
-            return "$num1 y $num2 son amigos";
+        if ($suma1 == $numero2 && $suma2 == $numero1) {
+            $resultado = $numero1 . ' y ' . $numero2 . ' son amigos';
+        } else {
+            $resultado = $numero1 . ' y ' . $numero2 . ' no son amigos';
         }
 
-        return "$num1 y $num2 no son amigos";
+        $this->guardar('numeros_amigos', 'numero1=' . $numero1 . ', numero2=' . $numero2, $resultado);
+
+        return redirect()->route('operaciones.index')->with('resultado', $resultado);
+    }
+
+    private function guardar(string $tipo, string $parametros, string $resultado): void
+    {
+        Operacion::create([
+            'tipo' => $tipo,
+            'parametros' => $parametros,
+            'resultado' => $resultado,
+        ]);
     }
 }

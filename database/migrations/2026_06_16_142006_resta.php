@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('operaciones', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
-            $table->text('parametros');
-            $table->text('resultado');
+            $table->string('parametros');
+            $table->string('resultado');
             $table->timestamps();
         });
     }

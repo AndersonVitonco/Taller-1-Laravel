@@ -11,6 +11,8 @@ class Operacion extends Model
 
     protected $table = 'operaciones';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'tipo',
         'parametros',

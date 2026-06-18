@@ -18,6 +18,26 @@ class OperacionesTest extends TestCase
         $response->assertSee('Ejemplo de operaciones');
     }
 
+    public function test_puede_abrir_los_formularios_de_operaciones(): void
+    {
+        $formularios = [
+            [route('operaciones.sumar.form'), 'Formulario de suma'],
+            [route('operaciones.restar.form'), 'Formulario de resta'],
+            [route('operaciones.triangulo.form'), 'Formulario de area de triangulo'],
+            [route('operaciones.circulo.form'), 'Formulario de area de circulo'],
+            [route('operaciones.factorial.form'), 'Formulario de factorial'],
+            [route('operaciones.primo.form'), 'Formulario de numero primo'],
+            [route('operaciones.amigos.form'), 'Formulario de numeros amigos'],
+        ];
+
+        foreach ($formularios as [$ruta, $texto]) {
+            $response = $this->get($ruta);
+
+            $response->assertStatus(200);
+            $response->assertSee($texto);
+        }
+    }
+
     public function test_suma_guarda_resultado_en_la_base_de_datos(): void
     {
         $response = $this->post(route('operaciones.sumar'), [

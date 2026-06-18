@@ -12,57 +12,14 @@
         <p>{{ session('resultado') }}</p>
     @endif
 
-    <h2>Suma</h2>
-    <form action="{{ route('operaciones.sumar') }}" method="POST">
-        @csrf
-        <input type="number" name="numero1" placeholder="Numero 1">
-        <input type="number" name="numero2" placeholder="Numero 2">
-        <button type="submit">Sumar</button>
-    </form>
-
-    <h2>Resta</h2>
-    <form action="{{ route('operaciones.restar') }}" method="POST">
-        @csrf
-        <input type="number" name="numero1" placeholder="Numero 1">
-        <input type="number" name="numero2" placeholder="Numero 2">
-        <button type="submit">Restar</button>
-    </form>
-
-    <h2>Area de triangulo</h2>
-    <form action="{{ route('operaciones.triangulo') }}" method="POST">
-        @csrf
-        <input type="number" name="base" placeholder="Base">
-        <input type="number" name="altura" placeholder="Altura">
-        <button type="submit">Calcular</button>
-    </form>
-
-    <h2>Area de circulo</h2>
-    <form action="{{ route('operaciones.circulo') }}" method="POST">
-        @csrf
-        <input type="number" name="radio" placeholder="Radio">
-        <button type="submit">Calcular</button>
-    </form>
-
-    <h2>Factorial</h2>
-    <form action="{{ route('operaciones.factorial') }}" method="POST">
-        @csrf
-        <input type="number" name="numero" placeholder="Numero">
-        <button type="submit">Calcular</button>
-    </form>
-
-    <h2>Numero primo</h2>
-    <form action="{{ route('operaciones.primo') }}" method="POST">
-        @csrf
-        <input type="number" name="numero" placeholder="Numero">
-        <button type="submit">Verificar</button>
-    </form>
-
-    <h2>Numeros amigos</h2>
-    <form action="{{ route('operaciones.amigos') }}" method="POST">
-        @csrf
-        <input type="number" name="numero1" placeholder="Numero 1">
-        <input type="number" name="numero2" placeholder="Numero 2">
-        <button type="submit">Verificar</button>
-    </form>
+    <ul>
+        <li><a href="{{ route('operaciones.sumar.form') }}">Formulario de suma</a></li>
+        <li><a href="{{ route('operaciones.restar.form') }}">Formulario de resta</a></li>
+        <li><a href="{{ route('operaciones.triangulo.form') }}">Formulario de area de triangulo</a></li>
+        <li><a href="{{ route('operaciones.circulo.form') }}">Formulario de area de circulo</a></li>
+        <li><a href="{{ route('operaciones.factorial.form') }}">Formulario de factorial</a></li>
+        <li><a href="{{ route('operaciones.primo.form') }}">Formulario de numero primo</a></li>
+        <li><a href="{{ route('operaciones.amigos.form') }}">Formulario de numeros amigos</a></li>
+    </ul>
 </body>
 </html>

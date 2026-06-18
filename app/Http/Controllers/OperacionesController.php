@@ -12,6 +12,41 @@ class OperacionesController extends Controller
         return view('operaciones');
     }
 
+    public function sumarForm()
+    {
+        return view('operaciones_sumar');
+    }
+
+    public function restarForm()
+    {
+        return view('operaciones_restar');
+    }
+
+    public function trianguloForm()
+    {
+        return view('operaciones_triangulo');
+    }
+
+    public function circuloForm()
+    {
+        return view('operaciones_circulo');
+    }
+
+    public function factorialForm()
+    {
+        return view('operaciones_factorial');
+    }
+
+    public function primoForm()
+    {
+        return view('operaciones_primo');
+    }
+
+    public function amigosForm()
+    {
+        return view('operaciones_amigos');
+    }
+
     public function sumar(Request $request)
     {
         $numero1 = (float) $request->input('numero1');

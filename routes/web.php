@@ -6,6 +6,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [OperacionesController::class, 'index']);
 
 Route::get('/operaciones', [OperacionesController::class, 'index'])->name('operaciones.index');
+Route::get('/operaciones/sumar', [OperacionesController::class, 'sumarForm'])->name('operaciones.sumar.form');
+Route::get('/operaciones/restar', [OperacionesController::class, 'restarForm'])->name('operaciones.restar.form');
+Route::get('/operaciones/triangulo', [OperacionesController::class, 'trianguloForm'])->name('operaciones.triangulo.form');
+Route::get('/operaciones/circulo', [OperacionesController::class, 'circuloForm'])->name('operaciones.circulo.form');
+Route::get('/operaciones/factorial', [OperacionesController::class, 'factorialForm'])->name('operaciones.factorial.form');
+Route::get('/operaciones/primo', [OperacionesController::class, 'primoForm'])->name('operaciones.primo.form');
+Route::get('/operaciones/amigos', [OperacionesController::class, 'amigosForm'])->name('operaciones.amigos.form');
 
 Route::get('/saludo', function () {
     return view('saludoht');
